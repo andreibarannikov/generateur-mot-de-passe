@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générateur de mot de passe</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #00ffcc;
+    }
+
+    input, select {
+      font-size: 20px;
+      padding: 10px;
+      width: 300px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      background-color: #00ffcc;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #00ddb3;
+    }
+
+    #copie {
+      color: limegreen;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔐 Générateur de mot de passe</h1>
+
+  <label for="longueur">Longueur du mot de passe :</label><br>
+  <select id="longueur">
+    <option value="8">8 caractères</option>
+    <option value="10">10 caractères</option>
+    <option value="12" selected>12 caractères</option>
+    <option value="16">16 caractères</option>
+    <option value="20">20 caractères</option>
+  </select><br>
+
+  <input type="text" id="password" readonly><br>
+
+  <button onclick="generer()">🔁 Générer</button>
+  <button onclick="copier()">📋 Copier</button>
+  <p id="copie"></p>
+
+  <script>
+    function generer() {
+      const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+      const longueur = parseInt(document.getElementById("longueur").value);
+      let motDePasse = "";
+      for (let i = 0; i < longueur; i++) {
+        motDePasse += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      document.getElementById("password").value = motDePasse;
+      document.getElementById("copie").innerText = "";
+    }
+
+    function copier() {
+      const champ = document.getElementById("password");
+      champ.select();
+      champ.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      document.getElementById("copie").innerText = "📋 Copié dans le presse-papiers !";
+    }
+  </script>
+
+</body>
+</html>
